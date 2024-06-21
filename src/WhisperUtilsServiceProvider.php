@@ -1,6 +1,6 @@
 <?php
 
-namespace KeiKey\WhisperUtils\Providers;
+namespace KeiKey\WhisperUtils;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\Console\AboutCommand;

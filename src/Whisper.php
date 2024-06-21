@@ -1,6 +1,6 @@
 <?php
 
-namespace KeiKey\WhisperUtils\Providers;
+namespace KeiKey\WhisperUtils;
 
 class Whisper
 {
