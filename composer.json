@@ -1,0 +1,42 @@
+{
+    "name": "keikey/whisper-utils",
+    "description": "Laravel package to help you integrate with Whisper",
+    "type": "library",
+    "authors": [
+        {
+            "name": "kei",
+            "email": "keiselami1@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "KeiKey\\WhisperUtils\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "KeiKey\\WhisperUtils\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^8.1",
+        "illuminate/support": "^10.48"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "preferred-install": "dist",
+        "optimize-autoloader": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "KeiKey\\WhisperUtils\\WhisperUtilsServiceProvider"
+            ],
+            "aliases": {
+                "Whisper": "KeiKey\\WhisperUtils\\Facades\\Whisper"
+            }
+        }
+    }
+}
