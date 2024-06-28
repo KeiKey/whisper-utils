@@ -1,6 +1,6 @@
 <?php
 
-namespace KeiKey\WhisperUtils;
+namespace KeiKey\WhisperUtils\Enums;
 
 enum Languages: string {
     case AFAR = 'aa';

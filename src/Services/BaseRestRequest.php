@@ -85,7 +85,7 @@ class BaseRestRequest
      */
     private function buildUrl(string $endpoint): string
     {
-        return rtrim($this->baseUrl, '/') . '/' . ltrim($endpoint, '/');
+        return rtrim($this->baseUrl, '/') . `/$this->apiVersion/` . ltrim($endpoint, '/');
     }
 
     /**
@@ -105,55 +105,50 @@ class BaseRestRequest
 
     /**
      * @param string $endpoint
-     * @param array $payload
+     * @param $payload
      * @return BaseRestResponse
-     * @throws GuzzleException
      */
-    public function get(string $endpoint, array $payload): BaseRestResponse
+    public function get(string $endpoint, $payload): BaseRestResponse
     {
         return $this->makeRequest('GET', $endpoint, $payload);
     }
 
     /**
      * @param string $endpoint
-     * @param array $payload
+     * @param $payload
      * @return BaseRestResponse
-     * @throws GuzzleException
      */
-    public function post(string $endpoint, array $payload): BaseRestResponse
+    public function post(string $endpoint, $payload): BaseRestResponse
     {
         return $this->makeRequest('POST', $endpoint, $payload);
     }
 
     /**
      * @param string $endpoint
-     * @param array $payload
+     * @param $payload
      * @return BaseRestResponse
-     * @throws GuzzleException
      */
-    public function put(string $endpoint, array $payload): BaseRestResponse
+    public function put(string $endpoint, $payload): BaseRestResponse
     {
         return $this->makeRequest('PUT', $endpoint, $payload);
     }
 
     /**
      * @param string $endpoint
-     * @param array $payload
+     * @param $payload
      * @return BaseRestResponse
-     * @throws GuzzleException
      */
-    public function patch(string $endpoint, array $payload): BaseRestResponse
+    public function patch(string $endpoint, $payload): BaseRestResponse
     {
         return $this->makeRequest('PATCH', $endpoint, $payload);
     }
 
     /**
      * @param string $endpoint
-     * @param array $payload
+     * @param $payload
      * @return BaseRestResponse
-     * @throws GuzzleException
      */
-    public function delete(string $endpoint, array $payload): BaseRestResponse
+    public function delete(string $endpoint, $payload): BaseRestResponse
     {
         return $this->makeRequest('DELETE', $endpoint, $payload);
     }
@@ -161,25 +156,19 @@ class BaseRestRequest
     /**
      * @param string $method
      * @param string $endpoint
-     * @param array $payload
+     * @param $payload
      * @return BaseRestResponse
-     * @throws GuzzleException
      */
-    protected function makeRequest(string $method, string $endpoint, array $payload): BaseRestResponse
+    protected function makeRequest(string $method, string $endpoint, $payload): BaseRestResponse
     {
-        try {
-            $response = $this->client->request($method, $this->buildUrl($endpoint), [
-                'headers'   => $this->prepareHeaders($payload['headers'] ?? []),
-                'query'     => $payload['query'] ?? null,
-                'json'      => $payload['payload'] ?? null,
-                'multipart' => $payload['multipart'] ?? null,
-                'body'      => $payload['body'] ?? null
-            ]);
+        $response = $this->client->request($method, $this->buildUrl($endpoint), [
+            'headers'   => $this->prepareHeaders($payload['headers'] ?? []),
+            'query'     => $payload['query'] ?? null,
+            'json'      => $payload['payload'] ?? null,
+            'multipart' => $payload['multipart'] ?? null,
+            'body'      => $payload['body'] ?? null
+        ]);
 
-            return new BaseRestResponse($response);
-        } catch (\Exception $e) {
-            throw $e;
-        }
+        return new BaseRestResponse($response);
     }
-
 }

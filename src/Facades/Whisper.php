@@ -3,16 +3,18 @@
 namespace KeiKey\WhisperUtils\Facades;
 
 use Illuminate\Support\Facades\Facade;
+use KeiKey\WhisperUtils\Services\BaseRestResponse;
+use KeiKey\WhisperUtils\Services\Whisper as ConcreteWhisper;
 
 /**
- * @method static BaseSoapResponse createSpeech(string $wsdl, array $options)
- * @method static BaseSoapResponse createTranscription(string $wsdl, array $options)
- * @method static BaseSoapResponse createTranslation(string $wsdl, array $options)
+ * @method static BaseRestResponse createSpeech(string $wsdl, array $options) more than likely this should not be used here
+ * @method static BaseRestResponse createTranscription(string $wsdl, array $options)
+ * @method static BaseRestResponse createTranslation(string $wsdl, array $options)
  */
 class Whisper extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return \KeiKey\WhisperUtils\Whisper::class;
+        return ConcreteWhisper::class;
     }
 }
