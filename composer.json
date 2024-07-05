@@ -20,7 +20,7 @@
     },
     "require": {
         "php": "^8.1",
-        "illuminate/support": "^10.48"
+        "illuminate/support": "*"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

@@ -3,7 +3,7 @@
 namespace KeiKey\WhisperUtils;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Foundation\Console\AboutCommand;
+//use Illuminate\Foundation\Console\AboutCommand;
 
 /**
  * Class WhisperUtilsServiceProvider
@@ -14,7 +14,7 @@ final class WhisperUtilsServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        AboutCommand::add('Whisper Utils is a package to help you integrate with Whisper.', fn () => ['Version' => '1.0.0']);
+//        AboutCommand::add('Whisper Utils is a package to help you integrate with Whisper.', fn () => ['Version' => '1.0.0']);
 
         $this->publishes([
             __DIR__.'/../config/whisper.php' => config_path('whisper.php'),
