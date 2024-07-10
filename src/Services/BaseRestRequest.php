@@ -160,20 +160,14 @@ class BaseRestRequest
     protected function makeRequest(string $method, string $endpoint, array $payload): BaseRestResponse
     {
         try {
-//            dd([
-//                'headers' => $this->prepareHeaders($payload['headers'] ?? []),
-//                'multipart' => $payload['multipart'] ?? null,
-//            ]);
             $response = $this->client->request($method, $this->buildUrl($endpoint), [
-                'headers' => $this->prepareHeaders($payload['headers'] ?? []),
+                'headers'   => $this->prepareHeaders($payload['headers'] ?? []),
                 'multipart' => $payload['multipart'] ?? null,
-//                'form_params' => $payload['form_params'] ?? null,
-//                'body' => $payload['body'] ?? null
+                'body'      => $payload['body'] ?? null,
             ]);
 
             return new BaseRestResponse($response);
         } catch (GuzzleException $exception) {
-            dd($exception->getMessage());
             return new BaseRestResponse($exception->getMessage());
         }
     }

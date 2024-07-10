@@ -4,7 +4,6 @@ namespace KeiKey\WhisperUtils\Services;
 
 use KeiKey\WhisperUtils\Enums\Languages;
 use KeiKey\WhisperUtils\Enums\ResponseFormat;
-use KeiKey\WhisperUtils\Enums\TimestampGranularity;
 
 class CreateTranscriptionPayload
 {
@@ -18,7 +17,7 @@ class CreateTranscriptionPayload
      * @param string|null $prompt
      * @param ResponseFormat|string|null $response_format
      * @param float|null $temperature
-     * @param array|null $timestamp_granularity
+     * @param string|null $timestamp_granularity
      */
     public function __construct(
         public string $file,
@@ -28,7 +27,7 @@ class CreateTranscriptionPayload
         public ?string $prompt = '',
         public ResponseFormat|string|null $response_format = 'json',
         public ?float $temperature = 0,
-        public ?array $timestamp_granularity = [TimestampGranularity::default()]
+        public ?string $timestamp_granularity = 'segment'
     ) { }
 
     public function toArray(): array
