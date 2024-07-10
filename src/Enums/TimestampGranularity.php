@@ -2,7 +2,13 @@
 
 namespace KeiKey\WhisperUtils\Enums;
 
-enum TimestampGranularity: string {
-    case WORD    = 'word';
-    case SEGMENT = 'segment';
+class TimestampGranularity extends Enum
+{
+    public const WORD    = 'word';
+    public const SEGMENT = 'segment';
+
+    public static function default(): string
+    {
+        return self::SEGMENT;
+    }
 }

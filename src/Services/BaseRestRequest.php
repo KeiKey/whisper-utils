@@ -2,10 +2,8 @@
 
 namespace KeiKey\WhisperUtils\Services;
 
-use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ServerException;
+use GuzzleHttp\Exception\GuzzleException;
 
 /**
  * Class BaseRestRequest.
@@ -85,7 +83,7 @@ class BaseRestRequest
      */
     private function buildUrl(string $endpoint): string
     {
-        return rtrim($this->baseUrl, '/') . `/$this->apiVersion/` . ltrim($endpoint, '/');
+        return rtrim($this->baseUrl, '/') . '/' . $this->apiVersion. '/' . $endpoint;
     }
 
     /**
@@ -95,9 +93,9 @@ class BaseRestRequest
     public function prepareHeaders(array $headers): array
     {
         $default = [
-            'Content-Type'  => 'multipart/form-data',
+//            'Content-Type'  => 'multipart/form-data',
             'Accept'        => 'application/json',
-            'Authorization' => `Bearer $this->bearerToken`
+            'Authorization' => 'Bearer '. $this->bearerToken
         ];
 
         return array_merge ($default, $headers);
@@ -105,50 +103,50 @@ class BaseRestRequest
 
     /**
      * @param string $endpoint
-     * @param $payload
+     * @param array $payload
      * @return BaseRestResponse
      */
-    public function get(string $endpoint, $payload): BaseRestResponse
+    public function get(string $endpoint, array $payload): BaseRestResponse
     {
         return $this->makeRequest('GET', $endpoint, $payload);
     }
 
     /**
      * @param string $endpoint
-     * @param $payload
+     * @param array $payload
      * @return BaseRestResponse
      */
-    public function post(string $endpoint, $payload): BaseRestResponse
+    public function post(string $endpoint, array $payload): BaseRestResponse
     {
         return $this->makeRequest('POST', $endpoint, $payload);
     }
 
     /**
      * @param string $endpoint
-     * @param $payload
+     * @param array $payload
      * @return BaseRestResponse
      */
-    public function put(string $endpoint, $payload): BaseRestResponse
+    public function put(string $endpoint, array $payload): BaseRestResponse
     {
         return $this->makeRequest('PUT', $endpoint, $payload);
     }
 
     /**
      * @param string $endpoint
-     * @param $payload
+     * @param array $payload
      * @return BaseRestResponse
      */
-    public function patch(string $endpoint, $payload): BaseRestResponse
+    public function patch(string $endpoint, array $payload): BaseRestResponse
     {
         return $this->makeRequest('PATCH', $endpoint, $payload);
     }
 
     /**
      * @param string $endpoint
-     * @param $payload
+     * @param array $payload
      * @return BaseRestResponse
      */
-    public function delete(string $endpoint, $payload): BaseRestResponse
+    public function delete(string $endpoint, array $payload): BaseRestResponse
     {
         return $this->makeRequest('DELETE', $endpoint, $payload);
     }
@@ -156,19 +154,27 @@ class BaseRestRequest
     /**
      * @param string $method
      * @param string $endpoint
-     * @param $payload
+     * @param array $payload
      * @return BaseRestResponse
      */
-    protected function makeRequest(string $method, string $endpoint, $payload): BaseRestResponse
+    protected function makeRequest(string $method, string $endpoint, array $payload): BaseRestResponse
     {
-        $response = $this->client->request($method, $this->buildUrl($endpoint), [
-            'headers'   => $this->prepareHeaders($payload['headers'] ?? []),
-            'query'     => $payload['query'] ?? null,
-            'json'      => $payload['payload'] ?? null,
-            'multipart' => $payload['multipart'] ?? null,
-            'body'      => $payload['body'] ?? null
-        ]);
+        try {
+//            dd([
+//                'headers' => $this->prepareHeaders($payload['headers'] ?? []),
+//                'multipart' => $payload['multipart'] ?? null,
+//            ]);
+            $response = $this->client->request($method, $this->buildUrl($endpoint), [
+                'headers' => $this->prepareHeaders($payload['headers'] ?? []),
+                'multipart' => $payload['multipart'] ?? null,
+//                'form_params' => $payload['form_params'] ?? null,
+//                'body' => $payload['body'] ?? null
+            ]);
 
-        return new BaseRestResponse($response);
+            return new BaseRestResponse($response);
+        } catch (GuzzleException $exception) {
+            dd($exception->getMessage());
+            return new BaseRestResponse($exception->getMessage());
+        }
     }
 }

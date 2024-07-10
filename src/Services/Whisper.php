@@ -19,8 +19,8 @@ class Whisper
     public function __construct(public BaseRestRequest $baseRequest)
     {
         $this->baseRequest
-            ->setBaseUrl(Config::get('whisper.open_api_base_url'))
-            ->setBearerToken(Config::get('whisper.api_key'))
+            ->setBaseUrl(Config::get('whisper.base_url'))
+            ->setBearerToken(Config::get('whisper.bearer_token'))
             ->setApiVersion(Config::get('whisper.version'));
     }
 
@@ -34,7 +34,7 @@ class Whisper
      */
     public function createTranscription(CreateTranscriptionPayload $payload): BaseRestResponse
     {
-        return $this->baseRequest->post('/audio/transcriptions', $payload);
+        return $this->baseRequest->post('/audio/transcriptions', $payload->toArray());
     }
 
     /**
@@ -47,6 +47,6 @@ class Whisper
      */
     public function createTranslation(CreateTranslationPayload $payload): BaseRestResponse
     {
-        return $this->baseRequest->post('/audio/translations', $payload);
+        return $this->baseRequest->post('/audio/translations', $payload->toArray());
     }
 }

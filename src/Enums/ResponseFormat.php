@@ -2,10 +2,16 @@
 
 namespace KeiKey\WhisperUtils\Enums;
 
-enum ResponseFormat: string {
-    case JSON         = 'json';
-    case TEXT         = 'text';
-    case SRT          = 'srt';
-    case VERBOSE_JSON = 'verbose_json';
-    case VTT          = 'vtt';
+class ResponseFormat extends Enum
+{
+    public const JSON         = 'json';
+    public const TEXT         = 'text';
+    public const SRT          = 'srt';
+    public const VERBOSE_JSON = 'verbose_json';
+    public const VTT          = 'vtt';
+
+    public static function default(): string
+    {
+        return self::JSON;
+    }
 }

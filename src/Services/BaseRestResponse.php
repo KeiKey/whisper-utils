@@ -72,7 +72,7 @@ class BaseRestResponse
     /**
      * @return PumpStream|Stream|StreamInterface|null
      */
-    public function getBody()
+    public function getBody(): PumpStream|Stream|StreamInterface|null
     {
         return $this->response->getBody();
     }
